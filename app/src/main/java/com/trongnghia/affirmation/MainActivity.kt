@@ -26,6 +26,16 @@ class MainActivity : AppCompatActivity() {
         rcvAffirmation.adapter = itemAdapter
         rcvAffirmation.setHasFixedSize(true)
 
+        val listInput = mutableListOf(1, 2, 3, 4,5 , 6, 7, 8, 9)
+        val listOuput = listInput.filter { it < 5 }
+
+        val listOut = mutableListOf<Int>()
+        listInput.forEach {
+            if (it<5) {
+                listOut.add(it)
+            }
+        }
+
 
     }
 }
