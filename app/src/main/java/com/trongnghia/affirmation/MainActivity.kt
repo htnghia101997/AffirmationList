@@ -1,14 +1,23 @@
 package com.trongnghia.affirmation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.trongnghia.affirmation.adapter.ItemAdapter
 import com.trongnghia.affirmation.model.Affirmation
 import com.trongnghia.affirmation.model.ObjectListAffirmation
+import com.trongnghia.affirmation.ui.DetailActivity
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,24 +27,42 @@ class MainActivity : AppCompatActivity() {
         val tvSize: TextView = this.findViewById(R.id.tvSize)
         tvSize.text = sizeOfList.toString()
 
+        tvSize.setOnClickListener {
+
+        }
+
         val list:List<Affirmation> = objectListAffirmation.getListAffirmation()
 
-        val itemAdapter: ItemAdapter = ItemAdapter(this, list)
+        val itemAdapter: ItemAdapter = ItemAdapter(context = this,
+            listAffirmationAdapter=list,
+            onClickCallback = ItemAdapter.OnClickCallback {
+            handleOnClick(it)
+        } )
         val rcvAffirmation = findViewById<RecyclerView>(R.id.rcvAffirmation)
 
         rcvAffirmation.adapter = itemAdapter
         rcvAffirmation.setHasFixedSize(true)
 
-        val listInput = mutableListOf(1, 2, 3, 4,5 , 6, 7, 8, 9)
-        val listOuput = listInput.filter { it < 5 }
+//
 
-        val listOut = mutableListOf<Int>()
-        listInput.forEach {
-            if (it<5) {
-                listOut.add(it)
-            }
-        }
 
+    }
+    fun handleOnClick(getDataCallback:String){
+
+
+        // start a new activityt
+        // pass data to new activity
+        val intent: Intent = Intent(this, DetailActivity::class.java)
+        val bundle: Bundle = Bundle()
+        bundle.putString("keyBundle", getDataCallback)
+        intent.putExtras(bundle)
+
+
+
+
+        this.startActivity(intent)
+
+//        Toast.makeText(this,getDataCallback,Toast.LENGTH_SHORT).show()
 
     }
 }
